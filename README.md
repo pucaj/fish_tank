@@ -15,7 +15,7 @@ Daniel Skórczyński (@pucaj):
   - Layout napisany w swingu
   - Zaimplementowanie głównej pętli programu
   - Rysowanie obiektów na ekranie apliakcji
-  - Logika tworzenia się nowych obiektów i tras
+  - Logika tworzenia się tras
   - Część funkcji i dokumentacji
   - Testy jednostkowe
   - Kontrolki symulacyjne
