@@ -12,6 +12,7 @@ Daniel Skórczyński (Pucaj - twórca repozytorium)
   - Część funkcji i dokumentacji
   - Testy jednostkowe
   - Kontrolki symulacyjne
+  - Generator map
   
 Osoba #2
   - Tworzenie klas
