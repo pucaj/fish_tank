@@ -1,11 +1,24 @@
-# fish_tank
-All smaller projects in different languages and technologies
+# Kontroler lotów
+Projekt grupowy
 
-PL
-Repozytorium ma na celu zebranie wszystkich pomniejszych projektów, 
-które są funkcjonalne. Projekty są napisane w różnych językach, frameworkach
-i technologiach. Część z nich jest grupowa, przy czym w każdym projekcie jest zaznaczone,
-kto (z osób, które wyraziły zgodę) robił jaką część. Czasem będzie to bardzo precyzyjnie 
-wyszczególnione w komentarzach w kodzie, czasem tylko w plikach README. Ze względu na to,
-że są to projekty z czasu, kiedy się uczyłem/uczę, niektóre mogą być słabiej udokumentowane, 
-a rozkład pracy opisany mniej szczegółowo.
+Aplikacja wyświetlająca radar z samolotami, która informuje o potencjalnych zagrożeniach powietrze-powietrze (potencjalne zderzenie) i ziemia-powietrze (kolizja z budynkiem), oraz pozwala wysłać polecenie do pilotów by zmienili kurs. Informuje także o wydarzonych kolizjach.
+
+## Rozkład pracy
+Daniel Skórczyński (Pucaj - twórca repozytorium)
+  - Layout napisany w swingu
+  - Zaimplementowanie głównej pętli programu
+  - Rysowanie obiektów na ekranie apliakcji
+  - Logika tworzenia się nowych obiektów i tras
+  - Część funkcji i dokumentacji
+  - Testy jednostkowe
+  - Kontrolki symulacyjne
+  
+Osoba #2
+  - Tworzenie klas
+  - Implementacja systemu kolizji i zagrożeń
+  - Funkcjonalności klas
+  
+Osoba #3
+  - Logika poruszania się obiektów
+  - Mechanizm wczytywania mapy
+  - Pomoc przy layoucie
