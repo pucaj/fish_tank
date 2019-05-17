@@ -19,12 +19,12 @@ Daniel Skórczyński (Pucaj - twórca repozytorium)
   - Kontrolki symulacyjne
   - Generator map
   
-Osoba #2
+Paweł Raglis:
   - Tworzenie klas
   - Implementacja systemu kolizji i zagrożeń
   - Funkcjonalności klas
   
-Osoba #3
+Magdalena Sawicka
   - Logika poruszania się obiektów
   - Mechanizm wczytywania mapy
   - Pomoc przy layoucie
