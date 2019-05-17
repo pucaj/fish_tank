@@ -9,6 +9,8 @@ Zespół:
   - Daniel Skórczyński
 
 ## Rozkład pracy
+Pewne metody i klasy mają wyszczególnionych autorów w komentarzach kodu
+
 Daniel Skórczyński (@pucaj):
   - Layout napisany w swingu
   - Zaimplementowanie głównej pętli programu
@@ -21,10 +23,13 @@ Daniel Skórczyński (@pucaj):
   
 Paweł Raglis (@VukoDyas):
   - Tworzenie klas
+  - Pomoc przy layoucie
   - Implementacja systemu kolizji i zagrożeń
   - Funkcjonalności klas
   
 Magdalena Sawicka (@MagdalenaSawicka):
+  - Tworzenie klas
   - Logika poruszania się obiektów
   - Mechanizm wczytywania mapy
   - Pomoc przy layoucie
+  - Implementacja logów
