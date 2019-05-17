@@ -9,7 +9,7 @@ Zespół:
   - Daniel Skórczyński
 
 ## Rozkład pracy
-Daniel Skórczyński (@pucaj - twórca repozytorium)
+Daniel Skórczyński (@pucaj):
   - Layout napisany w swingu
   - Zaimplementowanie głównej pętli programu
   - Rysowanie obiektów na ekranie apliakcji
@@ -24,7 +24,7 @@ Paweł Raglis (@VukoDyas):
   - Implementacja systemu kolizji i zagrożeń
   - Funkcjonalności klas
   
-Magdalena Sawicka (@MagdalenaSawicka)
+Magdalena Sawicka (@MagdalenaSawicka):
   - Logika poruszania się obiektów
   - Mechanizm wczytywania mapy
   - Pomoc przy layoucie
