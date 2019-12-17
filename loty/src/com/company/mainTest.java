@@ -12,7 +12,7 @@ public class mainTest{
 
     @Test
     public void tryRadarMaps(){
-        radar R = new radar();
+        Radar R = new Radar();
         R.initMap("map_1280x720.txt");
         Dimension exp = new Dimension(1280/2,720/2);
         Assertions.assertEquals(exp,R.map.getDimension());
@@ -37,24 +37,24 @@ public class mainTest{
         R.initMap("map_1920-1080.jpg");
         Assertions.assertNull(R.map,"Plik który nie istnieje, nie powinien inicjalizować mapy");
 
-        mapa map = null;
+        Mapa map = null;
         try {
-            map = new mapa("map_1280x720.txt");
+            map = new Mapa("map_1280x720.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Mapa nie istnieje!");
             e.printStackTrace();
         }
-        radar R1 = new radar(map);
+        Radar R1 = new Radar(map);
         Assertions.assertNotNull(R1.map,"Mapa powinna się załadować z pliku który istnieje");
 
         map = null;
         try {
-            map = new mapa("brakmapy.txtcc");
+            map = new Mapa("brakmapy.txtcc");
         } catch (FileNotFoundException e) {
             System.out.println("Brak mapy");
             e.printStackTrace();
         }
-        radar R2 = new radar(map);
+        Radar R2 = new Radar(map);
         Assertions.assertNull(R2.map,"Mapa nie powinna się zinicjalizować, ponieważ nie istnieje plik z mapą.");
     }
 
@@ -62,21 +62,21 @@ public class mainTest{
     public void tryInitStatki(){
 
         // Without map
-        radar R = new radar();
+        Radar R = new Radar();
         Assertions.assertNull(R.statki,"Ships cannot excist without map!");
 
         // With specified map
-        mapa specifiedMap = null;
+        Mapa specifiedMap = null;
         try {
-            specifiedMap = new mapa("map_1280x720.txt");
+            specifiedMap = new Mapa("map_1280x720.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Cannot load specified map");
         }
-        radar R1 = new radar(specifiedMap);
+        Radar R1 = new Radar(specifiedMap);
         Assertions.assertNotNull(R1.statki,"Ships shouldn't be null with map!");
 
         // Checking elements of list
-        for(statek s : R1.statki){
+        for(Statek s : R1.statki){
             Assertions.assertNotNull(s.trasa,"Course list should be initialized");
             Assertions.assertNotNull(s.id,"Id should be assigned to the object");
             Assertions.assertNotNull(s.getPozycja(),"Position should be assigned to the object");
@@ -88,9 +88,9 @@ public class mainTest{
 
     @Test
     public void tryAddStatek(){
-        radar R = null;
+        Radar R = null;
         try {
-            R = new radar(new mapa("map_1280x720.txt"));
+            R = new Radar(new Mapa("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -102,7 +102,7 @@ public class mainTest{
         Assertions.assertEquals(primarySize + 1, afterAddSize,
                 "Size of the list should be about one greater than primary size");
 
-        statek s = R.statki.get(R.statki.size()-1);
+        Statek s = R.statki.get(R.statki.size()-1);
         Assertions.assertNotNull(s.trasa,"Course list should be initialized");
         Assertions.assertNotNull(s.id,"Id should be assigned to the object");
         Assertions.assertNotNull(s.getPozycja(),"Position should be assigned to the object");
@@ -112,9 +112,9 @@ public class mainTest{
 
     @Test
     public void tryZmianaKursu(){
-        radar R = null;
+        Radar R = null;
         try {
-            R = new radar(new mapa("map_1280x720.txt"));
+            R = new Radar(new Mapa("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -136,16 +136,16 @@ public class mainTest{
         Assertions.assertEquals(oldVelocity,newVelocity,"New velocity should be equal old velocity");
 
         R.zmianaKursu(0,4);
-        statek s = R.statki.get(1);
+        Statek s = R.statki.get(1);
         R.zmianaKursu(s,new Vec2d(500,-600));
         R.zmianaKursu(R.statki.get(2),-12.4);
     }
 
     @Test
     public void Simulate() {
-        radar R = null;
+        Radar R = null;
         try {
-            R = new radar(new mapa("map_1280x720.txt"));
+            R = new Radar(new Mapa("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -155,16 +155,16 @@ public class mainTest{
         for (int i = 0; i < 100000; i++)
             R.lec(4);
 
-        for (statek s : R.statki) {
-            Assertions.assertEquals(false, fun.in_bounds(640, 360, s.getPozycja()),
+        for (Statek s : R.statki) {
+            Assertions.assertEquals(false, UtilityFunctions.in_bounds(640, 360, s.getPozycja()),
                     "All ships should be out of bounds");
         }
         Assertions.assertEquals(oldSize, R.statki.size(), "Ships shouldn't be destroyed");
 
         //simulating and deleting ships
-        radar R1 = null;
+        Radar R1 = null;
         try {
-            R1 = new radar(new mapa("map_1280x720.txt"));
+            R1 = new Radar(new Mapa("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -176,9 +176,9 @@ public class mainTest{
         Assertions.assertEquals(0, R.statki.size(), "All ships should be destroyed");
 
         //testing lec(speed)
-        radar R2 = null;
+        Radar R2 = null;
         try {
-            R2 = new radar(new mapa("map_1280x720.txt"));
+            R2 = new Radar(new Mapa("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -187,7 +187,7 @@ public class mainTest{
             R2.lec(-12);
         }
 
-        for (statek s : R2.statki) {
+        for (Statek s : R2.statki) {
             Assertions.assertEquals(s.trasa.getFirst().coord, s.getPozycja(),
                     "Ships shouldn't move with negative time");
         }
@@ -196,7 +196,7 @@ public class mainTest{
             R2.lec(0);
         }
 
-        for (statek s : R2.statki) {
+        for (Statek s : R2.statki) {
             Assertions.assertEquals(s.trasa.getFirst().coord, s.getPozycja(),
                     "Ships shouldn't move with time equal zero");
         }
