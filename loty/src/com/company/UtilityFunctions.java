@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.buildings.Budynek;
+import com.company.ships.Statek;
 import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
@@ -13,34 +15,34 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class UtilityFunctions {
 
-    static double courseAngle = 6;
+    public static double courseAngle = 6;
     public static double DLUGOSCMAPY;
     public static double SZEROKOSCMAPY;
-    static double speed = 1; // prędkość symulacji
-    static boolean antiAliasing;
-    static boolean isRunning;
-    static boolean realVariables; // Pokazywanie rzeczywistych wartości
-    static boolean showId;
-    static boolean showActive;
-    static boolean showCourse;
-    static boolean showActiveBox;
-    static boolean showWarnings;
-    static boolean circulation;
-    static boolean advancedOptions;
-    static boolean editMode = false;
-    static boolean doShift = false;
-    static int FPS = 120; // ilość FPSów logiki + grafiki
-    static int activeShip; // Wybrany statek
-    static int precision = 2; // Precyzja liczb rzeczywistych
+    public static double speed = 1; // prędkość symulacji
+    public static boolean antiAliasing;
+    public static boolean isRunning;
+    public static boolean realVariables; // Pokazywanie rzeczywistych wartości
+    public static boolean showId;
+    public static boolean showActive;
+    public static boolean showCourse;
+    public static boolean showActiveBox;
+    public static boolean showWarnings;
+    public static boolean circulation;
+    public static boolean advancedOptions;
+    public static boolean editMode = false;
+    public static boolean doShift = false;
+    public static int FPS = 120; // ilość FPSów logiki + grafiki
+    public static int activeShip; // Wybrany statek
+    public static int precision = 2; // Precyzja liczb rzeczywistych
 
-    static Vec2d shift = new Vec2d(0,0);
-    static double angleShift = 0;
+    public static Vec2d shift = new Vec2d(0,0);
+    public static double angleShift = 0;
 
     /* Losowanie znaku {-1,1} */
     /**
      * @return randomly generated sing value 1 or -1.
      */
-    static double rand_sgn(){
+    public static double rand_sgn(){
         if(Math.floor(rand(2)) == 0 ) return -1.0;
         else return 1.0;
     }
@@ -52,7 +54,7 @@ public class UtilityFunctions {
      * @return randomly generated number from the range of values precised by given parameters: variation and value of the number.
      * @throws IllegalArgumentException
      */
-    static double rand_avg(double value, double variation) throws IllegalArgumentException{
+    public static double rand_avg(double value, double variation) throws IllegalArgumentException{
         if(variation < 0) throw new IllegalArgumentException("Variation cannot be negative");
         return ThreadLocalRandom.current().nextDouble(value - variation*value, value + variation*value);
     }
@@ -167,7 +169,7 @@ public class UtilityFunctions {
 
     /* Obrócenie punktu TARGET względem punktu ORIGIN o kąt ANGLE */
     /*                  FUNKCJA PRZYJMUJE RADIANY!                */
-    static Vec2d rotate(Vec2d origin, Vec2d target, double angle){
+    public static Vec2d rotate(Vec2d origin, Vec2d target, double angle){
         double realx = target.x - origin.x;
         double realy = target.y - origin.y;
         double x = realx * Math.cos(angle) - realy * Math.sin(angle);

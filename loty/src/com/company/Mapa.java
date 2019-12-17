@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.buildings.Budynek;
 import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.io.File;
 /**
  * Radar shows objects flying over
  * certain field of terrain.
- *
+ * <p>
  * Mapa contains information about
  * the size of that field, the buildings
  * that are placed there, their location on the
@@ -35,32 +36,43 @@ public class Mapa {
     /**
      * @return dimensions of the map.
      */
-    public Dimension getDimension(){ return dimension; }
+    public Dimension getDimension() {
+        return dimension;
+    }
+
     /**
      * @return map's width value.
      */
-    public int getWidth(){ return dimension.width; }
+    public int getWidth() {
+        return dimension.width;
+    }
+
     /**
      * @return map's height value.
      */
-    public int getHeight(){ return dimension.height; }
+    public int getHeight() {
+        return dimension.height;
+    }
 
 
     /**
      * Map constructor.
+     *
      * @param s Name of the file containing map to load.
      * @throws FileNotFoundException
      */
-    public Mapa(String s) throws FileNotFoundException{
+    public Mapa(String s) throws FileNotFoundException {
         this.src = s;
         initMap(s);
     }
+
     /**
      * Default contsructor.
+     *
      * @throws FileNotFoundException
      */
-    public Mapa() throws FileNotFoundException{
-        this.src ="map_1280x720.txt";
+    public Mapa() throws FileNotFoundException {
+        this.src = "map_1280x720.txt";
         initMap(src);
     }
 
@@ -73,19 +85,19 @@ public class Mapa {
      * @param src Name of the file to read from.
      * @throws FileNotFoundException
      */
-    private void initMap(String src) throws FileNotFoundException{
-        Scanner plik = new Scanner(new File(src));
+    private void initMap(String src) throws FileNotFoundException {
+        Scanner plik = new Scanner(new File("loty\\".concat(src)));
 
         while (plik.hasNextDouble()) {
 
             double s = plik.nextDouble(); //szerokosc mapy
             double d = plik.nextDouble(); //dlugosc mapy
 
-            this.dimension = new Dimension((int)d,(int)s);
+            this.dimension = new Dimension((int) d, (int) s);
 
             budynki = new ArrayList<>();
 
-            while(plik.hasNextDouble()){
+            while (plik.hasNextDouble()) {
 
                 double x = plik.nextDouble();
                 double y = plik.nextDouble();
@@ -93,7 +105,7 @@ public class Mapa {
                 double sz = plik.nextDouble();
                 double w = plik.nextDouble();
 
-                budynki.add( new Budynek(new Vec2d(x,y), dl, sz, w) );
+                budynki.add(new Budynek(new Vec2d(x, y), dl, sz, w));
 
             }
         }

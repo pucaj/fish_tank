@@ -1,4 +1,4 @@
-package com.company;
+package com.company.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * and information about collisions that actually happened.
  * @author Magdalena Sawicka
  */
-public class LogsGUI extends JPanel
+public class LogsJPanel extends JPanel
 {
     private JLabel zagrozenia = new JLabel("ZAGROŻENIA:");
     private JLabel kolizje = new JLabel("KOLIZJE:");
@@ -24,7 +24,7 @@ public class LogsGUI extends JPanel
     private LinkedList<LocalTime> logstime;
     private int Xsize, Ysize ;
 
-    public LogsGUI(Dimension dim){
+    public LogsJPanel(Dimension dim){
 
         Xsize = (int)(dim.width/2*0.95);
         Ysize = (int)(dim.height*0.13) ;
