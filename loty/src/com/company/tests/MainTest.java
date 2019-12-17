@@ -1,5 +1,9 @@
-package com.company;
+package com.company.tests;
 
+import com.company.Mapa;
+import com.company.Radar;
+import com.company.ships.Statek;
+import com.company.UtilityFunctions;
 import com.sun.javafx.geom.Vec2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,34 +12,34 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 
 
-public class mainTest{
+public class MainTest {
 
     @Test
-    public void tryRadarMaps(){
+    public void tryRadarMaps() {
         Radar R = new Radar();
         R.initMap("map_1280x720.txt");
-        Dimension exp = new Dimension(1280/2,720/2);
-        Assertions.assertEquals(exp,R.map.getDimension());
-        Assertions.assertNotNull(R.map,"Mapa powinna istnieć!");
+        Dimension exp = new Dimension(1280 / 2, 720 / 2);
+        Assertions.assertEquals(exp, R.map.getDimension());
+        Assertions.assertNotNull(R.map, "Mapa powinna istnieć!");
 
         R.statki.clear();
         R.map = null;
         R.initMap("map_1600x900.txt");
-        exp = new Dimension(1600/2,900/2);
-        Assertions.assertEquals(exp,R.map.getDimension());
-        Assertions.assertNotNull(R.map,"Mapa powinna istnieć!");
+        exp = new Dimension(1600 / 2, 900 / 2);
+        Assertions.assertEquals(exp, R.map.getDimension());
+        Assertions.assertNotNull(R.map, "Mapa powinna istnieć!");
 
         R.statki.clear();
         R.map = null;
         R.initMap("map_1920x1080.txt");
-        exp = new Dimension(1920/2,1080/2);
-        Assertions.assertEquals(exp,R.map.getDimension());
-        Assertions.assertNotNull(R.map,"Mapa powinna istnieć!");
+        exp = new Dimension(1920 / 2, 1080 / 2);
+        Assertions.assertEquals(exp, R.map.getDimension());
+        Assertions.assertNotNull(R.map, "Mapa powinna istnieć!");
 
         R.statki.clear();
         R.map = null;
         R.initMap("map_1920-1080.jpg");
-        Assertions.assertNull(R.map,"Plik który nie istnieje, nie powinien inicjalizować mapy");
+        Assertions.assertNull(R.map, "Plik który nie istnieje, nie powinien inicjalizować mapy");
 
         Mapa map = null;
         try {
@@ -45,7 +49,7 @@ public class mainTest{
             e.printStackTrace();
         }
         Radar R1 = new Radar(map);
-        Assertions.assertNotNull(R1.map,"Mapa powinna się załadować z pliku który istnieje");
+        Assertions.assertNotNull(R1.map, "Mapa powinna się załadować z pliku który istnieje");
 
         map = null;
         try {
@@ -55,15 +59,15 @@ public class mainTest{
             e.printStackTrace();
         }
         Radar R2 = new Radar(map);
-        Assertions.assertNull(R2.map,"Mapa nie powinna się zinicjalizować, ponieważ nie istnieje plik z mapą.");
+        Assertions.assertNull(R2.map, "Mapa nie powinna się zinicjalizować, ponieważ nie istnieje plik z mapą.");
     }
 
     @Test
-    public void tryInitStatki(){
+    public void tryInitStatki() {
 
         // Without map
         Radar R = new Radar();
-        Assertions.assertNull(R.statki,"Ships cannot excist without map!");
+        Assertions.assertNull(R.statki, "Ships cannot excist without map!");
 
         // With specified map
         Mapa specifiedMap = null;
@@ -73,21 +77,21 @@ public class mainTest{
             System.out.println("Cannot load specified map");
         }
         Radar R1 = new Radar(specifiedMap);
-        Assertions.assertNotNull(R1.statki,"Ships shouldn't be null with map!");
+        Assertions.assertNotNull(R1.statki, "Ships shouldn't be null with map!");
 
         // Checking elements of list
-        for(Statek s : R1.statki){
-            Assertions.assertNotNull(s.trasa,"Course list should be initialized");
-            Assertions.assertNotNull(s.id,"Id should be assigned to the object");
-            Assertions.assertNotNull(s.getPozycja(),"Position should be assigned to the object");
-            Assertions.assertNotNull(s.getWysokosc(),"Height should be assigned to the object");
-            Assertions.assertNotNull(s.getPredkosc(),"Velocity should be assigned to the object");
+        for (Statek s : R1.statki) {
+            Assertions.assertNotNull(s.trasa, "Course list should be initialized");
+            Assertions.assertNotNull(s.id, "Id should be assigned to the object");
+            Assertions.assertNotNull(s.getPozycja(), "Position should be assigned to the object");
+            Assertions.assertNotNull(s.getWysokosc(), "Height should be assigned to the object");
+            Assertions.assertNotNull(s.getPredkosc(), "Velocity should be assigned to the object");
         }
 
     }
 
     @Test
-    public void tryAddStatek(){
+    public void tryAddStatek() {
         Radar R = null;
         try {
             R = new Radar(new Mapa("map_1280x720.txt"));
@@ -102,16 +106,16 @@ public class mainTest{
         Assertions.assertEquals(primarySize + 1, afterAddSize,
                 "Size of the list should be about one greater than primary size");
 
-        Statek s = R.statki.get(R.statki.size()-1);
-        Assertions.assertNotNull(s.trasa,"Course list should be initialized");
-        Assertions.assertNotNull(s.id,"Id should be assigned to the object");
-        Assertions.assertNotNull(s.getPozycja(),"Position should be assigned to the object");
-        Assertions.assertNotNull(s.getWysokosc(),"Height should be assigned to the object");
-        Assertions.assertNotNull(s.getPredkosc(),"Velocity should be assigned to the object");
+        Statek s = R.statki.get(R.statki.size() - 1);
+        Assertions.assertNotNull(s.trasa, "Course list should be initialized");
+        Assertions.assertNotNull(s.id, "Id should be assigned to the object");
+        Assertions.assertNotNull(s.getPozycja(), "Position should be assigned to the object");
+        Assertions.assertNotNull(s.getWysokosc(), "Height should be assigned to the object");
+        Assertions.assertNotNull(s.getPredkosc(), "Velocity should be assigned to the object");
     }
 
     @Test
-    public void tryZmianaKursu(){
+    public void tryZmianaKursu() {
         Radar R = null;
         try {
             R = new Radar(new Mapa("map_1280x720.txt"));
@@ -123,7 +127,7 @@ public class mainTest{
         double oldVelocity = R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).predkosc;
         double oldHeight = R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).wysokosc;
 
-        R.zmianaKursu(0,new Vec2d(100,100));
+        R.zmianaKursu(0, new Vec2d(100, 100));
 
         Vec2d newCoords = new Vec2d(R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).coord);
         double newVelocity = R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).predkosc;
@@ -132,13 +136,13 @@ public class mainTest{
                 "New position.x should be about 100 greater than old position.x");
         Assertions.assertEquals(oldCoords.y + 100, newCoords.y,
                 "New position.y should be about 100 greater than old position.y");
-        Assertions.assertEquals(oldHeight,newHeight,"New height should be equal old height");
-        Assertions.assertEquals(oldVelocity,newVelocity,"New velocity should be equal old velocity");
+        Assertions.assertEquals(oldHeight, newHeight, "New height should be equal old height");
+        Assertions.assertEquals(oldVelocity, newVelocity, "New velocity should be equal old velocity");
 
-        R.zmianaKursu(0,4);
+        R.zmianaKursu(0, 4);
         Statek s = R.statki.get(1);
-        R.zmianaKursu(s,new Vec2d(500,-600));
-        R.zmianaKursu(R.statki.get(2),-12.4);
+        R.zmianaKursu(s, new Vec2d(500, -600));
+        R.zmianaKursu(R.statki.get(2), -12.4);
     }
 
     @Test

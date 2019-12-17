@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.buildings.Budynek;
+import com.company.ships.*;
 import com.sun.javafx.geom.Vec2d;
 
 import java.io.FileNotFoundException;
@@ -35,7 +37,7 @@ public class Radar {
      */
     public Mapa map;
 
-    Radar() {
+    public Radar() {
 
     }
 
@@ -149,7 +151,7 @@ public class Radar {
             statki.add(new Helikopter(iden, map.getWidth(), map.getHeight(), map.budynki, true));
 
         } else if (i >= 15 && i < 75) {
-            statki.add(new samolot(iden, map.getWidth(), map.getHeight(), map.budynki, true));
+            statki.add(new Samolot(iden, map.getWidth(), map.getHeight(), map.budynki, true));
 
         } else if (i >= 75 && i < 85) {
             statki.add(new Sterowiec(iden, map.getWidth(), map.getHeight(), map.budynki, true));
@@ -264,7 +266,7 @@ public class Radar {
                 statki.add(new Helikopter(i, map.getWidth(), map.getHeight(), map.budynki));
 
             } else if (i1 >= 20 && i1 < 75) {
-                statki.add(new samolot(i, map.getWidth(), map.getHeight(), map.budynki));
+                statki.add(new Samolot(i, map.getWidth(), map.getHeight(), map.budynki));
 
             } else if (i1 >= 75 && i1 < 85) {
                 statki.add(new Sterowiec(i, map.getWidth(), map.getHeight(), map.budynki));
