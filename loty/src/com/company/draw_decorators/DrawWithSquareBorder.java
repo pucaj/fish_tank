@@ -1,15 +1,19 @@
-package com.company.states;
+package com.company.draw_decorators;
 
 import com.company.ships.Statek;
+import com.company.states.State;
 
 import java.awt.*;
 
-import static com.company.UtilityFunctions.activeColor;
+public class DrawWithSquareBorder extends State {
+    private State inner;
 
-public class ActiveState extends State {
+    public DrawWithSquareBorder(State state) {
+        inner = state;
+    }
+
     @Override
     public void draw(Statek context, Graphics2D g) {
-//        g.setColor(new Color(179, 117, 255, 255));
         final float[] dash1 = {3.0f};
         final BasicStroke dashed =
                 new BasicStroke(3.0f,
@@ -18,7 +22,6 @@ public class ActiveState extends State {
                         2.0f, dash1, 0.0f);
         g.setStroke(dashed);
         g.drawRect((int) context.getPozycja().x - 20, (int) context.getPozycja().y - 20, 40, 40);
-        g.setColor(activeColor());
-        context.drawShape(g);
+        inner.draw(context, g);
     }
 }

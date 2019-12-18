@@ -12,9 +12,7 @@ import static com.company.UtilityFunctions.shift_vector;
 public abstract class State {
 
     public static final int NORMAL_STATE = 0;
-    public static final int MOUSE_OVER_STATE = 1;
-    public static final int ACTIVE_STATE = 2;
-    public static final int IN_DANGER_STATE = 3;
+    public static final int IN_DANGER_STATE = 1;
 
     public void lec(Statek context, double time) throws IllegalArgumentException {
         if (time <= 0) throw new IllegalArgumentException("Time cannot be negative");
@@ -50,6 +48,7 @@ public abstract class State {
                 context.setPozycja(shift_vector(context.getPozycja(), new Vec2d(skala * (e.coord.x - s.coord.x), skala * (e.coord.y - s.coord.y))));
         }
     }
+
     //TODO przerobić nieco motodę draw(), aby wykorzystywała dekoratory
     public abstract void draw(Statek context, Graphics2D g);
 }
