@@ -7,6 +7,7 @@ Zespół:
   - Paweł Raglis
   - Magdalena Sawicka
   - Daniel Skórczyński
+  - Dawid Bielecki
 
 ## Rozkład pracy
 Pewne metody i klasy mają wyszczególnionych autorów w komentarzach kodu
@@ -33,3 +34,7 @@ Magdalena Sawicka (@MagdalenaSawicka):
   - Mechanizm wczytywania mapy
   - Pomoc przy layoucie
   - Implementacja logów
+
+Dawid Bielecki (@dbielecki97):
+  - Zaimplementowanie wzorców projektowych:
+    * State
