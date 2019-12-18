@@ -5,6 +5,7 @@ import com.company.UtilityFunctions;
 import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +25,11 @@ public class Szybowiec extends Statek {
      */
     public Szybowiec(int i, double dlug, double szer, ArrayList<Budynek> bud) {
         super(i, 300.0, 14000.0, dlug, szer, bud);
+        try {
+            loadImage("glider.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -37,6 +43,12 @@ public class Szybowiec extends Statek {
      */
     public Szybowiec(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation) {
         super(i, 300.0, 14000.0, dlug, szer, bud, variation);
+        try {
+            loadImage("glider.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -52,6 +64,12 @@ public class Szybowiec extends Statek {
      */
     public Szybowiec(int i, double dlug, double szer, ArrayList<Budynek> bud, boolean przylatuje) {
         super(i, 300.0, 14000.0, dlug, szer, bud, przylatuje);
+        try {
+            loadImage("glider.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -68,19 +86,31 @@ public class Szybowiec extends Statek {
      */
     public Szybowiec(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation, boolean przylatuje) {
         super(i, 300.0, 14000.0, dlug, szer, bud, variation, przylatuje);
+        try {
+            loadImage("glider.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Szybowiec(Szybowiec sz) {
         super(sz);
+        try {
+            loadImage("glider.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private Color color = Color.BLACK;
 
     @Override
-    public void drawShape(Graphics g) {
+    public void drawShape(Graphics2D g) {
         int x = (int) pozycja.x;
         int y = (int) pozycja.y;
-        ((Graphics2D) g).setStroke(new BasicStroke(2));
+        g.setStroke(new BasicStroke(2));
 
         Vec2d sec = new Vec2d(x, y - 8);
         g.drawLine(x, y, (int) sec.x, (int) sec.y);
@@ -95,13 +125,8 @@ public class Szybowiec extends Statek {
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        state.draw(this, g);
-    }
-
-    @Override
     public void drawId(Graphics2D g) {
-        g.drawString(Integer.toString(id), (int) pozycja.x - 15, (int) pozycja.y + 16);
+        g.drawString(Integer.toString(id), (int) pozycja.x - 25, (int) pozycja.y + 26);
     }
 
     public Color getColor() {

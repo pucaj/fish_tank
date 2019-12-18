@@ -49,6 +49,10 @@ public abstract class State {
         }
     }
 
-    //TODO przerobić nieco motodę draw(), aby wykorzystywała dekoratory
-    public abstract void draw(Statek context, Graphics2D g);
+    public void drawShape(Statek context, Graphics2D g) {
+    }
+
+    public void drawImg(Statek context, Graphics2D g) {
+        context.drawImage(g);
+    }
 }
