@@ -6,9 +6,16 @@ import com.company.Waypoint;
 import com.company.states.NormalState;
 import com.sun.javafx.geom.Vec2d;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static com.company.UtilityFunctions.*;
 
@@ -22,9 +29,15 @@ import static com.company.UtilityFunctions.*;
  * @author Paweł Raglis
  */
 public abstract class Statek {
+    public BufferedImage getImg() {
+        return img;
+    }
+
     /**
      * Identification number.
      */
+    protected BufferedImage img;
+
     public int id;
 
     public Color getColor() {
@@ -64,7 +77,7 @@ public abstract class Statek {
      * @param sz  Map's width value.
      * @param bud List of the buildings placed on the map.
      * @throws IllegalArgumentException if given parameters are negative or equal zero
-     * @author Magdalena Sawicka
+     * @author Magdalena Sawic  ka
      */
     public Statek(int i, double v, double h, double dl, double sz, ArrayList<Budynek> bud) throws IllegalArgumentException {
         if (v <= 0) throw new IllegalArgumentException("Velocity cannot be equal zero or less");
@@ -178,14 +191,21 @@ public abstract class Statek {
         this.predkosc = s.predkosc;
         this.n_kurs = s.n_kurs;
         state = new NormalState();
-        this.color=s.color;
+        this.color = s.color;
+        this.img = s.img;
     }
 
-    public abstract void draw(Graphics2D g);
+    public abstract void drawShape(Graphics2D g);
 
     public abstract void drawId(Graphics2D g);
 
-    public abstract void drawShape(Graphics g);
+    public void drawImg(Graphics2D g) {
+        state.drawImg(this, g);
+    }
+
+    public void draw(Graphics2D g) {
+        state.drawShape(this, g);
+    }
 
     public State getState() {
         return state;
@@ -497,6 +517,19 @@ public abstract class Statek {
      */
     public int getN_kurs() {
         return n_kurs;
+    }
+
+    protected void loadImage(String filename) throws FileNotFoundException {
+        File plik = new File("loty\\img\\".concat(filename));
+        try {
+            img = ImageIO.read(plik);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void drawImage(Graphics2D g) {
+        g.drawImage(img, (int) pozycja.x - img.getWidth() / 2, (int) pozycja.y - img.getHeight() / 2, null);
     }
 }
 

@@ -3,6 +3,7 @@ package com.company.ships;
 import com.company.buildings.Budynek;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  * @author Magdalena Sawicka
  */
 public class Balon extends Statek {
+
 
     /**
      * Creates new object with the given parameters.
@@ -37,6 +39,11 @@ public class Balon extends Statek {
     public Balon(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation) {
         super(i, 20.0, 600.0, dlug, szer, bud, variation);
         color = Color.cyan;
+        try {
+            loadImage("balloon.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -70,28 +77,33 @@ public class Balon extends Statek {
     public Balon(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation, boolean przylatuje) {
         super(i, 20.0, 600.0, dlug, szer, bud, variation, przylatuje);
         color = Color.cyan;
+        try {
+            loadImage("balloon.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public Balon(Balon b) {
         super(b);
         color = Color.cyan;
+        try {
+            loadImage("balloon.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void draw(Graphics2D g) {
-        state.draw(this, g);
-    }
-
 
     @Override
-    public void drawShape(Graphics g) {
+    public void drawShape(Graphics2D g) {
         g.fillOval((int) getPozycja().x - 5, (int) getPozycja().y - 5, 10, 10);
     }
 
     @Override
     public void drawId(Graphics2D g2d) {
-        g2d.drawString(String.valueOf(id), (int) pozycja.x - 10, (int) pozycja.y + 15);
+        g2d.drawString(String.valueOf(id), (int) pozycja.x - 20, (int) pozycja.y + 25);
 
     }
 

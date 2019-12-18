@@ -3,6 +3,7 @@ package com.company.ships;
 import com.company.buildings.Budynek;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,11 @@ public class Samolot extends Statek {
     public Samolot(int i, double dlug, double szer, ArrayList<Budynek> bud) {
         super(i, 900.0, 11000.0, dlug, szer, bud);
         color = Color.RED;
+        try {
+            loadImage("plane.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -37,6 +43,11 @@ public class Samolot extends Statek {
     public Samolot(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation) {
         super(i, 900.0, 11000.0, dlug, szer, bud, variation);
         color = Color.RED;
+        try {
+            loadImage("plane.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -53,6 +64,11 @@ public class Samolot extends Statek {
     public Samolot(int i, double dlug, double szer, ArrayList<Budynek> bud, boolean przylatuje) {
         super(i, 900.0, 11000.0, dlug, szer, bud, przylatuje);
         color = Color.RED;
+        try {
+            loadImage("plane.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -70,21 +86,26 @@ public class Samolot extends Statek {
     public Samolot(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation, boolean przylatuje) {
         super(i, 900.0, 11000.0, dlug, szer, bud, variation, przylatuje);
         color = Color.RED;
+        try {
+            loadImage("plane.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Samolot(Samolot s) {
         super(s);
         color = Color.RED;
+        try {
+            loadImage("plane.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void draw(Graphics2D g) {
-        state.draw(this, g);
-    }
-
 
     @Override
-    public void drawShape(Graphics g) {
+    public void drawShape(Graphics2D g) {
         int x = (int) pozycja.x - 6;
         int y = (int) pozycja.y - 6;
         g.fillPolygon(new int[]{x, x + 6, x + 12}, new int[]{y, y + 12, y}, 3);
@@ -92,7 +113,7 @@ public class Samolot extends Statek {
 
     @Override
     public void drawId(Graphics2D g) {
-        g.drawString(Integer.toString(id), (int) pozycja.x - 12, (int) pozycja.y + 16);
+        g.drawString(Integer.toString(id), (int) pozycja.x - 22, (int) pozycja.y + 26);
     }
 
     public Color getColor() {
