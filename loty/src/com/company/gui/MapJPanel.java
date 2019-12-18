@@ -2,12 +2,9 @@ package com.company.gui;
 
 import com.company.buildings.Budynek;
 import com.company.Radar;
-import com.company.draw_decorators.DrawWithCircleBorder;
-import com.company.draw_decorators.DrawWithColor;
-import com.company.draw_decorators.DrawWithId;
-import com.company.draw_decorators.DrawWithSquareBorder;
+import com.company.map_drawing_templates.DrawMapUsingImages;
+import com.company.map_drawing_templates.DrawMapUsingShapes;
 import com.company.states.State;
-import com.company.Waypoint;
 import com.company.ships.Statek;
 import com.company.states.InDangerState;
 import com.company.states.NormalState;
@@ -18,7 +15,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -30,12 +26,41 @@ import static com.company.UtilityFunctions.*;
  * simulation of the flights.
  */
 public class MapJPanel extends JPanel implements MouseListener, MouseMotionListener {
+    public void setHover(int hover) {
+        this.hover = hover;
+    }
+
+    public void setTrackable(boolean trackable) {
+        this.trackable = trackable;
+    }
+
+    public void setHover_again(boolean hover_again) {
+        this.hover_again = hover_again;
+    }
+
     /**
      * List of the ships on the map.
      *
      * @see Statek
      */
     private final State[] states = {new NormalState(), new InDangerState()};
+
+    public ArrayList<Statek> getShips() {
+        return ships;
+    }
+
+    public ArrayList<Budynek> getBuildings() {
+        return buildings;
+    }
+
+    public LinkedList<Integer> getWarnings() {
+        return warnings;
+    }
+
+    public boolean isTrackable() {
+        return trackable;
+    }
+
     private ArrayList<Statek> ships;
     /**
      * List containing the buildings placed on the map.
@@ -49,6 +74,11 @@ public class MapJPanel extends JPanel implements MouseListener, MouseMotionListe
      * @see Radar
      */
     private LinkedList<Integer> warnings;
+
+    public int getHover() {
+        return hover;
+    }
+
     /**
      * Ship id which is pointed by mouse
      */
@@ -57,6 +87,11 @@ public class MapJPanel extends JPanel implements MouseListener, MouseMotionListe
      * Tells if the mouse is in the map bounds or not
      */
     private boolean trackable = false;
+
+    public boolean isNotHover_again() {
+        return !hover_again;
+    }
+
     /**
      * Tells that the ship can be hover again or not
      */
@@ -123,64 +158,11 @@ public class MapJPanel extends JPanel implements MouseListener, MouseMotionListe
     public void paintComponent(Graphics g_origin) {
         Graphics2D g = (Graphics2D) g_origin;
         super.paintComponent(g);
-        g.setFont(new Font("monospaced", Font.PLAIN, 12));
-        /* AntiAliasing */
-        if (antiAliasing) {
-            g.setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
+        if (imageRepresentation) {
+            new DrawMapUsingImages(this, g).draw();
         } else {
-            g.setRenderingHint(
-                    RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_OFF);
+            new DrawMapUsingShapes(this, g).draw();
         }
-
-
-        /* Rysuje budynki */
-        g.setColor(Color.GRAY);
-        buildings.forEach(b -> b.draw(g));
-
-        hover_again = false;
-
-        for (int i = 0; i < ships.size(); i++) {
-            Statek statek = ships.get(i);
-            statek.setState(new DrawWithColor(states[State.NORMAL_STATE], statek.getColor()));
-
-
-            if (!hover_again) {
-                hover_again = hover(statek);
-            }
-            drawCourse(statek, g);
-            if (showWarnings) {
-                warnings.forEach(j -> {
-                    if (j == statek.id) {
-                        statek.setState(
-                                new DrawWithColor(
-                                        new DrawWithCircleBorder(states[State.IN_DANGER_STATE]),
-                                        pulsingColor(new Color(255, 19, 0, 255), 0.6)));
-                    }
-                });
-            }
-            if (ships.indexOf(statek) == hover)
-                statek.setState(new DrawWithColor(states[State.NORMAL_STATE], activeColor()));
-            if (statek.id == activeShip && showActive)
-                if (showActiveBox)
-                    statek.setState(
-                            new DrawWithColor(
-                                    new DrawWithSquareBorder(new DrawWithColor(states[State.NORMAL_STATE], activeColor())),
-                                    new Color(179, 117, 255, 255))
-                    );
-                else
-                    statek.setState(new DrawWithColor(states[State.NORMAL_STATE], activeColor()));
-            if (showId)
-                statek.setState(new DrawWithColor(new DrawWithId(statek.getState()), statek.getColor()));
-            statek.draw(g);
-            if (editMode && (statek.id == activeShip)) {
-                drawEditedCourse(statek, g);
-            }
-        }
-
-
     }
 
     @Override
@@ -232,7 +214,7 @@ public class MapJPanel extends JPanel implements MouseListener, MouseMotionListe
      * @return boolean, true if cursor pointing ship, false if cursor are not pointing the ship
      * @author Daniel Skórczyński
      */
-    private boolean hover(Statek s) {
+    public boolean hover(Statek s) {
         if (!trackable) {
             hover = -1;
             return false;
@@ -258,88 +240,4 @@ public class MapJPanel extends JPanel implements MouseListener, MouseMotionListe
         }
     }
 
-    /**
-     * Joining all shapes to one area.
-     *
-     * @param a List of the all shapes
-     * @return Area, which is collection of all combined shapes
-     * @author Daniel Skórczyński
-     * @see Area
-     * @see Shape
-     */
-    private Area addAllShapes(ArrayList<Shape> a) {
-        if (a.size() == 0) return null;
-        Area all = new Area(a.get(0));
-        for (int i = 1; i < a.size(); i++)
-            all.add(new Area(a.get(i)));
-        return all;
-    }
-
-    /**
-     * @param s active ship which edited course will be displayed
-     * @param g graphic element
-     * @author Daniel Skórczyński
-     */
-    private void drawCourse(Statek s, Graphics2D g) {
-        if (s.id == activeShip && (showCourse || editMode)) {
-            if (!editMode) {
-                g.setStroke(new BasicStroke(1));
-            } else {
-                g.setStroke(new BasicStroke(2));
-            }
-            if (!editMode) {
-                g.setColor(Color.BLACK);
-            } else {
-                g.setColor(new Color(99, 107, 118, 255));
-            }
-
-            for (Waypoint w : s.trasa) {
-                if (s.trasa.indexOf(w) == 0) continue;
-
-                g.drawLine((int) s.trasa.get(s.trasa.indexOf(w) - 1).coord.x,
-                        (int) s.trasa.get(s.trasa.indexOf(w) - 1).coord.y,
-                        (int) w.coord.x, (int) w.coord.y);
-
-                g.fillOval((int) s.trasa.get(s.trasa.indexOf(w) - 1).coord.x - 2,
-                        (int) s.trasa.get(s.trasa.indexOf(w) - 1).coord.y - 2,
-                        4, 4);
-            }
-        }
-    }
-
-    /**
-     * @param s flying object
-     * @param g graphic element
-     * @author Daniel Skórczyński
-     */
-    private void drawEditedCourse(Statek s, Graphics2D g) {
-        g.setStroke(new BasicStroke(2));
-
-        LinkedList<Waypoint> temp = new LinkedList<>(s.trasa);
-        int k = s.getN_kurs() + 1;
-        temp.add(s.getN_kurs(), new Waypoint(s.getPozycja(), s.getWysokosc(), s.getPredkosc()));
-
-        if (angleShift == 0) {
-            temp.set(k, new Waypoint(shift_vector(temp.get(k).coord, shift),
-                    temp.get(k).wysokosc, temp.get(k).predkosc));
-        } else {
-            int last = temp.indexOf(temp.getLast());
-            for (int j = k; j < last; j++) {
-                temp.set(j, new Waypoint(new Vec2d(rotate(temp.get(j - 1).coord, temp.get(j).coord, Math.toRadians(angleShift))),
-                        temp.get(j).wysokosc, temp.get(j).predkosc));
-            }
-        }
-        g.setColor(pulsingColor(new Color(255, 0, 0, 255), 0.4));
-        for (Waypoint w : temp) {
-            if (temp.indexOf(w) == 0) continue;
-
-            g.drawLine((int) temp.get(temp.indexOf(w) - 1).coord.x,
-                    (int) temp.get(temp.indexOf(w) - 1).coord.y,
-                    (int) w.coord.x, (int) w.coord.y);
-
-            g.fillOval((int) temp.get(temp.indexOf(w) - 1).coord.x - 2,
-                    (int) temp.get(temp.indexOf(w) - 1).coord.y - 2,
-                    4, 4);
-        }
-    }
 }

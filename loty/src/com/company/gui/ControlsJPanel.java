@@ -52,6 +52,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
     private JCheckBox ACTIVEBOX = new JCheckBox("Pokazuj obramowanie aktywnego statku", true);
     private JCheckBox CIRCULATE = new JCheckBox("Zawsze pokazuj aktywny statek", true);
     private JCheckBox WARNINGS = new JCheckBox("Pokazuj zagrożenia", true);
+    private JCheckBox IMAGE_REPRESENTATION = new JCheckBox("Rysuj jako obrazki", false);
 
     // Wartości
     private JCheckBox PRECISION = new JCheckBox("Zaokrąglanie wyników", true);
@@ -132,7 +133,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
                 || source.equals(AA) || source.equals(PRECISION) || source.equals(PRECISION_LEVEL)
                 || source.equals(ADV_ENABLED) || source.equals(CUSTOM_ANGLE) || source.equals(CUSTOM_ANGLE_l)
                 || source.equals(CUSTOM_FPS) || source.equals(CUSTOM_FPS_l) || source.equals(CUSTOM_SPEED)
-                || source.equals(CUSTOM_SPEED_l)) {
+                || source.equals(CUSTOM_SPEED_l) || source.equals(IMAGE_REPRESENTATION)) {
             optionsUpdate();
         } else if (source.equals(ship)) {
             isRunning = false;
@@ -367,6 +368,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         ships.add(ACTIVEBOX);
         ships.add(WARNINGS);
         ships.add(CIRCULATE);
+        ships.add(IMAGE_REPRESENTATION);
         values.add(PRECISION);
         values.add(PRECISION_LEVEL);
         adv_settings.add(ADV_ENABLED);
@@ -389,6 +391,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         CUSTOM_FPS.addActionListener(this);
         CUSTOM_SPEED.addActionListener(this);
         CUSTOM_ANGLE.addActionListener(this);
+        IMAGE_REPRESENTATION.addActionListener(this);
 
         /* Dodawanie paneli do głownego kontenera */
         inner.add(graphics);
@@ -451,6 +454,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         showActiveBox = ACTIVEBOX.isSelected();
         showWarnings = WARNINGS.isSelected();
         circulation = CIRCULATE.isSelected();
+        imageRepresentation = IMAGE_REPRESENTATION.isSelected();
 
         // Advanced
         advancedOptions = ADV_ENABLED.isSelected();

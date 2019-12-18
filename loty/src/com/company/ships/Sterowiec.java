@@ -3,6 +3,7 @@ package com.company.ships;
 import com.company.buildings.Budynek;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,11 @@ public class Sterowiec extends Statek {
     public Sterowiec(int i, double dlug, double szer, ArrayList<Budynek> bud) {
         super(i, 125.0, 2600.0, dlug, szer, bud);
         color = Color.ORANGE;
+        try {
+            loadImage("blimp.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -37,6 +43,11 @@ public class Sterowiec extends Statek {
     public Sterowiec(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation) {
         super(i, 125.0, 2600.0, dlug, szer, bud, variation);
         color = Color.ORANGE;
+        try {
+            loadImage("blimp.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -53,6 +64,11 @@ public class Sterowiec extends Statek {
     public Sterowiec(int i, double dlug, double szer, ArrayList<Budynek> bud, boolean przylatuje) {
         super(i, 125.0, 2600.0, dlug, szer, bud, przylatuje);
         color = Color.ORANGE;
+        try {
+            loadImage("blimp.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -70,28 +86,32 @@ public class Sterowiec extends Statek {
     public Sterowiec(int i, double dlug, double szer, ArrayList<Budynek> bud, double variation, boolean przylatuje) {
         super(i, 125.0, 2600.0, dlug, szer, bud, variation, przylatuje);
         color = Color.ORANGE;
+        try {
+            loadImage("blimp.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Sterowiec(Sterowiec s) {
         super(s);
         color = Color.ORANGE;
+        try {
+            loadImage("blimp.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Override
-    public void draw(Graphics2D g) {
-        state.draw(this, g);
-    }
-
-
-    @Override
-    public void drawShape(Graphics g) {
+    public void drawShape(Graphics2D g) {
         g.fillRect((int) pozycja.x - 5, (int) pozycja.y - 5, 10, 10);
     }
 
     @Override
     public void drawId(Graphics2D g) {
-        g.drawString(Integer.toString(id), (int) pozycja.x - 10, (int) pozycja.y + 16);
+        g.drawString(Integer.toString(id), (int) pozycja.x - 20, (int) pozycja.y + 26);
 
     }
 
