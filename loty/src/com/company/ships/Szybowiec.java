@@ -1,8 +1,8 @@
 package com.company.ships;
 
+import com.company.Vec2d;
 import com.company.buildings.Budynek;
 import com.company.UtilityFunctions;
-import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
 import java.io.FileNotFoundException;

@@ -1,14 +1,21 @@
 package com.company.gui;
 
 import com.company.ships.*;
+import com.sun.org.apache.regexp.internal.RE;
+import javafx.scene.control.SelectionMode;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 import static com.company.UtilityFunctions.*;
 
@@ -67,6 +74,10 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
     private JTextField CUSTOM_FPS = new JTextField(Integer.toString(FPS));
     private JLabel CUSTOM_ANGLE_l = new JLabel("Kąt odchylenia tras");
     private JTextField CUSTOM_ANGLE = new JTextField(Double.toString(courseAngle));
+
+    // Memento
+    private JButton SAVE_STATE = new JButton("Zapisz stan");
+    private JButton READ_STATE = new JButton("Odczytaj stan");
 
     //lista statków dla ActionListenera
     /**
@@ -332,6 +343,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         JPanel inner = new JPanel();
         JPanel graphics = new JPanel();
         JPanel ships = new JPanel();
+        JPanel mementoPanel = new JPanel();
         JPanel values = new JPanel();
         JPanel adv_settings = new JPanel();
 
@@ -345,12 +357,14 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         graphics.setLayout(new FlowLayout(FlowLayout.LEFT));
         ships.setLayout(new BoxLayout(ships, BoxLayout.Y_AXIS));
         values.setLayout(new FlowLayout(FlowLayout.LEFT));
+        mementoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         adv_settings.setLayout(new GridLayout(0, 1));
 
         /* Rozmiary paneli */
         inner.setPreferredSize(new Dimension(dim.width - (int) (dim.width * 0.05), dim.height - (int) (dim.height * 0.05)));
         graphics.setPreferredSize(new Dimension(dim.width / 4 - dim.width / 50, dim.height / 8));
         ships.setPreferredSize(new Dimension(dim.width / 2 - (int) (dim.width * 0.1), dim.height / 3));
+        mementoPanel.setPreferredSize(new Dimension(dim.width / 2 - (int) (dim.width * 0.05), dim.height / 8));
         values.setPreferredSize(new Dimension(dim.width / 4 + (int) (dim.width * 0.1), dim.height / 8));
         adv_settings.setPreferredSize(new Dimension(dim.width / 2 - (int) (dim.width * 0.05), dim.height / 2));
 
@@ -358,6 +372,7 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         graphics.setBorder(BorderFactory.createTitledBorder("Grafika"));
         ships.setBorder(BorderFactory.createTitledBorder("Statki"));
         values.setBorder(BorderFactory.createTitledBorder("Wartości"));
+        mementoPanel.setBorder(BorderFactory.createTitledBorder("Stan programu"));
         adv_settings.setBorder(BorderFactory.createTitledBorder("Zaawansowane"));
 
         /* Dodawanie składowych do paneli */
@@ -378,6 +393,8 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         adv_settings.add(CUSTOM_FPS);
         adv_settings.add(CUSTOM_ANGLE_l);
         adv_settings.add(CUSTOM_ANGLE);
+        mementoPanel.add(SAVE_STATE);
+        mementoPanel.add(READ_STATE);
         AA.addActionListener(this);
         ID.addActionListener(this);
         ACTIVE.addActionListener(this);
@@ -392,12 +409,61 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
         CUSTOM_SPEED.addActionListener(this);
         CUSTOM_ANGLE.addActionListener(this);
         IMAGE_REPRESENTATION.addActionListener(this);
+        SAVE_STATE.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = null;
+                try {
+                    fc = new JFileChooser(new File(".").getCanonicalPath());
+
+                    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    fc.setMultiSelectionEnabled(false);
+                    fc.setAcceptAllFileFilterUsed(false);
+                    fc.setFileFilter(new FileNameExtensionFilter("Pliki kontrolera lotów", "ser"));
+                    fc.setSelectedFile(new File("snapshot_" + (new Date()).getTime() + "_" +  (new Random()).nextInt(1000) + ".ser"));
+
+                    int returnVal = fc.showSaveDialog(null);
+                    if(returnVal == JFileChooser.APPROVE_OPTION){
+                        File file = fc.getSelectedFile();
+                        mementoFilename = file.getAbsolutePath();
+                        memento = true;
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        READ_STATE.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = null;
+                try {
+                    fc = new JFileChooser(new File(".").getCanonicalPath());
+
+                    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    fc.setMultiSelectionEnabled(false);
+                    fc.setAcceptAllFileFilterUsed(false);
+                    fc.setFileFilter(new FileNameExtensionFilter("Pliki kontrolera lotów", "ser"));
+
+
+                    int returnVal = fc.showOpenDialog(null);
+                    if(returnVal == JFileChooser.APPROVE_OPTION){
+                        File file = fc.getSelectedFile();
+                        mementoFilename = file.getAbsolutePath();
+                        loadMemento = true;
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
         /* Dodawanie paneli do głownego kontenera */
         inner.add(graphics);
         inner.add(ships);
         inner.add(values);
         inner.add(adv_settings);
+        inner.add(mementoPanel);
 
         /* Ustawianie grup */
         gL.setHorizontalGroup(gL.createSequentialGroup()
@@ -406,13 +472,16 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
                         .addComponent(ships))
                 .addGroup(gL.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(values)
-                        .addComponent(adv_settings)));
+                        .addComponent(adv_settings)
+                        .addComponent(mementoPanel)));
         gL.linkSize(SwingConstants.HORIZONTAL, ships, adv_settings);
         gL.setVerticalGroup(gL.createSequentialGroup()
                 .addGroup(gL.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(graphics).addComponent(values))
                 .addGroup(gL.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(ships).addComponent(adv_settings)));
+                        .addComponent(ships).addComponent(adv_settings))
+                .addGroup(gL.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(mementoPanel)));
 
         return inner;
     }
@@ -489,7 +558,6 @@ public class ControlsJPanel extends JPanel implements ActionListener, ChangeList
             } catch (NullPointerException | NumberFormatException ignored) {
             }
         }
-
     }
 }
 

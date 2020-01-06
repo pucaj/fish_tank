@@ -3,12 +3,15 @@ package com.company;
 import com.company.gui.ControlsJPanel;
 import com.company.gui.LogsJPanel;
 import com.company.gui.MapJPanel;
-import com.sun.javafx.geom.Vec2d;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
+import java.util.Date;
+import java.util.Random;
 
 import static com.company.UtilityFunctions.*;
 
@@ -59,6 +62,43 @@ public class Main extends JFrame {
             angleShift = 0;
             doShift = false;
         }
+    }
+
+    private static void MementoSave(Radar R){
+        if(memento){
+            memento = false;
+            String filename = mementoFilename;
+            try {
+                FileOutputStream file = new FileOutputStream(filename);
+                ObjectOutputStream out = new ObjectOutputStream(file);
+
+                out.writeObject(R);
+
+                out.close();
+                file.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static Radar MementoRead(String fileName) throws IOException, ClassNotFoundException, Exception {
+        if(loadMemento){
+            loadMemento = false;
+
+            FileInputStream file = new FileInputStream(new File(fileName));
+            ObjectInputStream in = new ObjectInputStream(file);
+
+            Radar radar = (Radar)in.readObject();
+
+            in.close();
+            file.close();
+            return radar;
+        }
+
+        throw new Exception("Memento didn't loaded");
     }
 
     /**
@@ -175,6 +215,13 @@ public class Main extends JFrame {
             }
             draw(R);
             frames++;
+
+            MementoSave(R);
+            try {
+                R = MementoRead(mementoFilename);
+            } catch(Exception ex) {
+
+            }
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;

@@ -1,18 +1,15 @@
 package com.company.ships;
 
+import com.company.Vec2d;
 import com.company.buildings.Budynek;
 import com.company.states.State;
 import com.company.Waypoint;
 import com.company.states.NormalState;
-import com.sun.javafx.geom.Vec2d;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -28,7 +25,8 @@ import static com.company.UtilityFunctions.*;
  * @author Magdalena Sawicka
  * @author Paweł Raglis
  */
-public abstract class Statek {
+public abstract class Statek implements Serializable {
+    private static final long serialVersionUID = 1L;
     public BufferedImage getImg() {
         return img;
     }
@@ -36,7 +34,7 @@ public abstract class Statek {
     /**
      * Identification number.
      */
-    protected BufferedImage img;
+    protected transient BufferedImage img;
 
     public int id;
 

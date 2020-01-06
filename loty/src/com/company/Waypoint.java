@@ -1,6 +1,5 @@
 package com.company;
-
-import com.sun.javafx.geom.Vec2d;
+import java.io.Serializable;
 
 /** Object's trajectory consists of waypoints,
  * each waypoint has precised 3 values: location,
@@ -10,7 +9,8 @@ import com.sun.javafx.geom.Vec2d;
  * @see Vec2d
  */
 
-public class Waypoint {
+public class Waypoint implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * Coordinates of <i>waypoint</i>, x and y values describing its position on the map.
      */

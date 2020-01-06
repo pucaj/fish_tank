@@ -2,9 +2,10 @@ package com.company;
 
 import com.company.buildings.Budynek;
 import com.company.ships.Statek;
-import com.sun.javafx.geom.Vec2d;
+import com.sun.javafx.geom.Vec2f;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -32,12 +33,18 @@ public class UtilityFunctions {
     public static boolean advancedOptions;
     public static boolean editMode = false;
     public static boolean doShift = false;
+    public static boolean memento = false;
+    public static boolean loadMemento = false;
+    public static String mementoFilename = "";
+    public static String mementoPath = "";
     public static int FPS = 120; // ilość FPSów logiki + grafiki
     public static int activeShip; // Wybrany statek
-    public static int precision = 2; // Precyzja liczb rzeczywistych
 
+    public static int precision = 2; // Precyzja liczb rzeczywistych
     public static Vec2d shift = new Vec2d(0, 0);
+
     public static double angleShift = 0;
+
 
     /* Losowanie znaku {-1,1} */
 

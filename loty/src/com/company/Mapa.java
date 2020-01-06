@@ -1,10 +1,10 @@
 package com.company;
 
 import com.company.buildings.Budynek;
-import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -18,7 +18,8 @@ import java.io.File;
  * that are placed there, their location on the
  * map, their height and dimensions.
  */
-public class Mapa {
+public class Mapa implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * Dimensions of the map, specifies width and height values.
      */

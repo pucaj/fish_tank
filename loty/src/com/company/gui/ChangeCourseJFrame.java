@@ -1,7 +1,7 @@
 package com.company.gui;
 
+import com.company.Vec2d;
 import com.company.ships.Statek;
-import com.sun.javafx.geom.Vec2d;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
