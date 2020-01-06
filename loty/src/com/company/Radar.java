@@ -2,10 +2,10 @@ package com.company;
 
 import com.company.buildings.Budynek;
 import com.company.ships.*;
-import com.sun.javafx.geom.Vec2d;
 
 import java.io.FileNotFoundException;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -15,7 +15,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Daniel Skórczyński
  * @author Paweł Raglis
  */
-public class Radar {
+public class Radar implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * List of the objects currently flying above the mapped terrain.
      */

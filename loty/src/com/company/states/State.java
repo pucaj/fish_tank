@@ -1,15 +1,17 @@
 package com.company.states;
 
+import com.company.Vec2d;
 import com.company.Waypoint;
 import com.company.ships.Statek;
-import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
+import java.io.Serializable;
 
 import static com.company.UtilityFunctions.*;
 import static com.company.UtilityFunctions.shift_vector;
 
-public abstract class State {
+public abstract class State implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public static final int NORMAL_STATE = 0;
     public static final int IN_DANGER_STATE = 1;

@@ -1,5 +1,6 @@
 package com.company.map_drawing_templates;
 
+import com.company.Vec2d;
 import com.company.Waypoint;
 import com.company.draw_decorators.shape_decorators.DrawShapeWithCircleBorder;
 import com.company.draw_decorators.shape_decorators.DrawShapeWithColor;
@@ -8,7 +9,6 @@ import com.company.ships.Statek;
 import com.company.states.InDangerState;
 import com.company.states.NormalState;
 import com.company.states.State;
-import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
 import java.util.LinkedList;

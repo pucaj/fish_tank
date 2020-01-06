@@ -2,9 +2,9 @@ package com.company.tests;
 
 import com.company.Mapa;
 import com.company.Radar;
+import com.company.Vec2d;
 import com.company.ships.Statek;
 import com.company.UtilityFunctions;
-import com.sun.javafx.geom.Vec2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

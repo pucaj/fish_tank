@@ -1,9 +1,10 @@
 package com.company.buildings;
 
+import com.company.Vec2d;
 import com.company.ships.Statek;
-import com.sun.javafx.geom.Vec2d;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Map contains sets of objects from this class,
@@ -13,7 +14,9 @@ import java.awt.*;
  *
  * @author Paweł Raglis
  */
-public class Budynek {
+public class Budynek implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Location of the center point of the building.
      */
