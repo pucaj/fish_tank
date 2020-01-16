@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.factories.CivilianShipFactory;
 import com.company.gui.ControlsJPanel;
 import com.company.gui.LogsJPanel;
 import com.company.gui.MapJPanel;
@@ -151,13 +152,8 @@ public class Main extends JFrame {
         System.out.println();
     }
 
-    public static void main(String[] args) {
-
-        Radar R = new Radar();
-
-		/*
-		GOTOWY SYSTEM DOBIERANIA ROZDZIELCZOSCI
-		*/
+    public static void main(String[] args) throws InterruptedException {
+        Radar R = new Radar(new CivilianShipFactory());
 
         Dimension screenSize = new Dimension(Toolkit.getDefaultToolkit().getScreenSize());
         boolean fullScreen = false;
@@ -185,13 +181,11 @@ public class Main extends JFrame {
         logs = new LogsJPanel(new Dimension(R.map.getWidth(), R.map.getHeight()));
         new Main(new Dimension(R.map.getWidth() * 2, R.map.getHeight() * 2), screenSize, false);
 
-
         /* Temporary config - debug mode */
         isRunning = true;
         antiAliasing = true;
         realVariables = true;
         activeShip = -1;
-
 
         long lastTime = System.nanoTime();
         double amountOfTicks = FPS;
@@ -203,6 +197,7 @@ public class Main extends JFrame {
 
         /* Główna pętla */
         while (true) {
+            Thread.sleep(5);
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;

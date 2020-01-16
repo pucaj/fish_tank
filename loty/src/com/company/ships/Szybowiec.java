@@ -14,6 +14,16 @@ import java.util.ArrayList;
  * @author Magdalena Sawicka
  */
 public class Szybowiec extends Statek {
+    public Szybowiec() {
+        predkosc = 300.0;
+        wysokosc = 14000.0;
+
+        try {
+            loadImage("glider.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates new object with the given parameters.

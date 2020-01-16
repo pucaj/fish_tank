@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.buildings.Budynek;
+import com.company.factories.ShipsFactory;
 import com.company.ships.*;
 
 import java.io.FileNotFoundException;
@@ -17,6 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Radar implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    public ShipsFactory shipsFactory;
 
     /**
      * List of the objects currently flying above the mapped terrain.
@@ -39,8 +42,8 @@ public class Radar implements Serializable {
      */
     public Mapa map;
 
-    public Radar() {
-
+    public Radar(ShipsFactory shipsFactory) {
+        this.shipsFactory = shipsFactory;
     }
 
     /**
@@ -51,25 +54,25 @@ public class Radar implements Serializable {
      */
     private LinkedList<Integer> zagrozenia(){
         LinkedList<Integer> a = new LinkedList<>();
-        for (int i=0; i<statki.size()-1; i++)
+        for (int i = 0; i < statki.size() - 1; i++)
         {
-            for (int j=i+1; j<statki.size(); j++)
+            for (int j = i + 1; j < statki.size(); j++)
             {
                 if (statki.get(i).zagrozenie(statki.get(j).getPozycja(), statki.get(j).getWysokosc()))
                 {
                     if (!a.contains(statki.get(i).id)) a.add(statki.get(i).id);
                     if (!a.contains(statki.get(j).id)) a.add(statki.get(j).id);
                 }
-
             }
 
             for (Budynek b : map.budynki) {
                 if (b.zagrozenie(statki.get(i)) && !a.contains(statki.get(i).id)) a.add(statki.get(i).id);
             }
-
         }
+
         return a;
     }
+
     /**
      * For each flying object on the map checks if there was a collision with any other object or building.
      * @return List of objects that had a collision and should be removed form the map.
@@ -87,17 +90,15 @@ public class Radar implements Serializable {
                     if (!a.contains(statki.get(i).id)) a.add(statki.get(i).id);
                     if (!a.contains(statki.get(j).id)) a.add(statki.get(j).id);
                 }
-
             }
 
             for (Budynek b : map.budynki) {
                 if (b.kolizja(statki.get(i)) && !a.contains(statki.get(i).id)) a.add(statki.get(i).id);
             }
-
         }
+
         return a;
     }
-
 
     /**
      * Changes object's trajectory.
@@ -148,19 +149,94 @@ public class Radar implements Serializable {
 
         int i = ThreadLocalRandom.current().nextInt(100);
         if (i >= 0 && i < 2) {
-            statki.add(new Balon(iden, map.getWidth(), map.getHeight(), map.budynki, 0.8, true));
+            Statek balon = shipsFactory.createBalon();
+            balon.id = iden;
+            balon.losujTrase(
+                balon.getPredkosc(),
+                balon.getWysokosc(),
+                map.getWidth(),
+                map.getHeight(),
+                map.budynki,
+                0.8,
+                true
+            );
+            balon.setPozycja(balon.trasa.getFirst().coord);
+            balon.setWysokosc(balon.trasa.getFirst().wysokosc);
+            balon.setPredkosc(balon.trasa.getFirst().predkosc);
+
+            statki.add(balon);
+            //statki.add(new Balon(iden, map.getWidth(), map.getHeight(), map.budynki, 0.8, true));
         } else if (i >= 2 && i < 15) {
-            statki.add(new Helikopter(iden, map.getWidth(), map.getHeight(), map.budynki, true));
+            Statek helikopter = shipsFactory.createHelikopter();
+            helikopter.id = iden;
+            helikopter.losujTrase(
+                    helikopter.getPredkosc(),
+                    helikopter.getWysokosc(),
+                    map.getWidth(),
+                    map.getHeight(),
+                    map.budynki,
+                    true
+            );
+            helikopter.setPozycja(helikopter.trasa.getFirst().coord);
+            helikopter.setWysokosc(helikopter.trasa.getFirst().wysokosc);
+            helikopter.setPredkosc(helikopter.trasa.getFirst().predkosc);
+
+            statki.add(helikopter);
+            //statki.add(new Helikopter(iden, map.getWidth(), map.getHeight(), map.budynki, true));
 
         } else if (i >= 15 && i < 75) {
-            statki.add(new Samolot(iden, map.getWidth(), map.getHeight(), map.budynki, true));
+            Statek samolot = shipsFactory.createSamolot();
+            samolot.id = iden;
+            samolot.losujTrase(
+                    samolot.getPredkosc(),
+                    samolot.getWysokosc(),
+                    map.getWidth(),
+                    map.getHeight(),
+                    map.budynki,
+                    true
+            );
+            samolot.setPozycja(samolot.trasa.getFirst().coord);
+            samolot.setWysokosc(samolot.trasa.getFirst().wysokosc);
+            samolot.setPredkosc(samolot.trasa.getFirst().predkosc);
+
+            statki.add(samolot);
+            //statki.add(new Samolot(iden, map.getWidth(), map.getHeight(), map.budynki, true));
 
         } else if (i >= 75 && i < 85) {
-            statki.add(new Sterowiec(iden, map.getWidth(), map.getHeight(), map.budynki, true));
+            Statek sterowiec = shipsFactory.createSterowiec();
+            sterowiec.id = iden;
+            sterowiec.losujTrase(
+                    sterowiec.getPredkosc(),
+                    sterowiec.getWysokosc(),
+                    map.getWidth(),
+                    map.getHeight(),
+                    map.budynki,
+                    true
+            );
+            sterowiec.setPozycja(sterowiec.trasa.getFirst().coord);
+            sterowiec.setWysokosc(sterowiec.trasa.getFirst().wysokosc);
+            sterowiec.setPredkosc(sterowiec.trasa.getFirst().predkosc);
+
+            statki.add(sterowiec);
+            //statki.add(new Sterowiec(iden, map.getWidth(), map.getHeight(), map.budynki, true));
 
         } else if (i >= 85 && i <= 100) {
-            statki.add(new Szybowiec(iden, map.getWidth(), map.getHeight(), map.budynki, true));
+            Statek szybowiec = shipsFactory.createSzybowiec();
+            szybowiec.id = iden;
+            szybowiec.losujTrase(
+                    szybowiec.getPredkosc(),
+                    szybowiec.getWysokosc(),
+                    map.getWidth(),
+                    map.getHeight(),
+                    map.budynki,
+                    true
+            );
+            szybowiec.setPozycja(szybowiec.trasa.getFirst().coord);
+            szybowiec.setWysokosc(szybowiec.trasa.getFirst().wysokosc);
+            szybowiec.setPredkosc(szybowiec.trasa.getFirst().predkosc);
 
+            statki.add(szybowiec);
+            //statki.add(new Szybowiec(iden, map.getWidth(), map.getHeight(), map.budynki, true));
         }
     }
 
@@ -200,7 +276,6 @@ public class Radar implements Serializable {
             for(int i = 0; i < size; i++) {
                 statki.remove(statki.get(a.removeLast()));
             }
-
         }
     }
 

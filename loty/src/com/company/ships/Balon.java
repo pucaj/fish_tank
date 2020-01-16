@@ -12,7 +12,17 @@ import java.util.ArrayList;
  * @author Magdalena Sawicka
  */
 public class Balon extends Statek {
+    public Balon(){
+        predkosc = 20.0;
+        wysokosc = 600.0;
 
+        color = Color.cyan;
+        try {
+            loadImage("balloon.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates new object with the given parameters.

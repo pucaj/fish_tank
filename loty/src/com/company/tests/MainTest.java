@@ -3,6 +3,7 @@ package com.company.tests;
 import com.company.Mapa;
 import com.company.Radar;
 import com.company.Vec2d;
+import com.company.factories.CivilianShipFactory;
 import com.company.ships.Statek;
 import com.company.UtilityFunctions;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,7 @@ public class MainTest {
 
     @Test
     public void tryRadarMaps() {
-        Radar R = new Radar();
+        Radar R = new Radar(new CivilianShipFactory());
         R.initMap("map_1280x720.txt");
         Dimension exp = new Dimension(1280 / 2, 720 / 2);
         Assertions.assertEquals(exp, R.map.getDimension());
@@ -66,7 +67,7 @@ public class MainTest {
     public void tryInitStatki() {
 
         // Without map
-        Radar R = new Radar();
+        Radar R = new Radar(new CivilianShipFactory());
         Assertions.assertNull(R.statki, "Ships cannot excist without map!");
 
         // With specified map

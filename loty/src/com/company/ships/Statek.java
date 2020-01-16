@@ -46,7 +46,7 @@ public abstract class Statek implements Serializable {
      * Object's trajectory.
      */
     protected Color color;
-    public LinkedList<Waypoint> trasa;
+    public LinkedList<Waypoint> trasa = new LinkedList<Waypoint>();
     /**
      * Current position.
      */
@@ -54,16 +54,20 @@ public abstract class Statek implements Serializable {
     /**
      * Current altitude measured in meters.
      */
-    private double wysokosc;
+    protected double wysokosc;
     /**
      * Current velocity measured in kilometers per hour.
      */
-    private double predkosc;
+    protected double predkosc;
     /**
      * Waypoint that object is currently heading for.
      */
-    private int n_kurs;
+    private int n_kurs = 1;
     protected State state;
+
+    public Statek(){
+        state = new NormalState();
+    }
 
     /**
      * Creates new object with the given parameters.
@@ -315,7 +319,7 @@ public abstract class Statek implements Serializable {
      * @throws IllegalArgumentException if constants values are negative or equal zero
      * @author Daniel Skórczyński
      */
-    private void losujTrase(double v, double h, double dlugosc, double szerokosc, ArrayList<Budynek> budynki, double variation, boolean przylatuje) throws IllegalArgumentException {
+    public void losujTrase(double v, double h, double dlugosc, double szerokosc, ArrayList<Budynek> budynki, double variation, boolean przylatuje) throws IllegalArgumentException {
         if (v <= 0) throw new IllegalArgumentException("Velocity cannot be equal zero or less");
         if (h <= 0) throw new IllegalArgumentException("Height cannot be equal zero or less");
         if (dlugosc <= 0) throw new IllegalArgumentException("Long cannot be equal zero or less");
@@ -365,7 +369,7 @@ public abstract class Statek implements Serializable {
      * @throws IllegalArgumentException if constants values are negative or equal zero
      * @author Daniel Skórczyński
      */
-    private void losujTrase(double v, double h, double dlugosc, double szerokosc, ArrayList<Budynek> budynki, boolean przylatuje) throws IllegalArgumentException {
+    public void losujTrase(double v, double h, double dlugosc, double szerokosc, ArrayList<Budynek> budynki, boolean przylatuje) throws IllegalArgumentException {
         if (v <= 0) throw new IllegalArgumentException("Velocity cannot be equal zero or less");
         if (h <= 0) throw new IllegalArgumentException("Height cannot be equal zero or less");
         if (dlugosc <= 0) throw new IllegalArgumentException("Long cannot be equal zero or less");
@@ -484,6 +488,9 @@ public abstract class Statek implements Serializable {
         this.pozycja = pozycja;
     }
 
+    public void setPozycja(double x1, double x2){
+        this.pozycja = new Vec2d(x1, x2);
+    }
 
     /* Konstruktory */
 
