@@ -12,6 +12,17 @@ import java.util.ArrayList;
  * @author Magdalena Sawicka
  */
 public class Sterowiec extends Statek {
+    public Sterowiec() {
+        predkosc = 125.0;
+        wysokosc = 2600.0;
+
+        color = Color.ORANGE;
+        try {
+            loadImage("blimp.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates new object with the given parameters.

@@ -12,6 +12,17 @@ import java.util.ArrayList;
  * @author Magdalena Sawicka
  */
 public class Helikopter extends Statek {
+    public Helikopter() {
+        predkosc = 300.0;
+        wysokosc = 5100.0;
+
+        color = new Color(67, 255, 0, 255);
+        try {
+            loadImage("heli.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates new object with the given parameters.

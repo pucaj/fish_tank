@@ -12,6 +12,17 @@ import java.util.ArrayList;
  * @author Magdalena Sawicka
  */
 public class Samolot extends Statek {
+    public Samolot() {
+        predkosc = 900;
+        wysokosc = 11000;
+
+        color = Color.RED;
+        try {
+            loadImage("plane.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates new object with the given parameters.
