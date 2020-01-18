@@ -2,7 +2,6 @@ package com.company;
 
 import com.company.buildings.Budynek;
 import com.company.ships.Statek;
-import com.sun.javafx.geom.Vec2f;
 
 import java.awt.*;
 import java.io.Serializable;

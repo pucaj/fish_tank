@@ -299,7 +299,7 @@ public class Radar implements Serializable {
      */
     public void initMap(String src){
         try {
-            map = new Mapa(src);
+            map = Mapa.getInstance(src);
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
             map = null;
@@ -316,7 +316,7 @@ public class Radar implements Serializable {
      */
     public void initMap(){
         try {
-            map = new Mapa();
+            map = Mapa.getInstance();
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
             map = null;
