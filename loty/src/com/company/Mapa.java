@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.buildings.Budynek;
+import com.company.buildings.BudynekCloneFactory;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -102,6 +103,7 @@ public class Mapa implements Serializable {
      */
     private void initMap(String src) throws FileNotFoundException {
         Scanner plik = new Scanner(new File("loty\\".concat(src)));
+        BudynekCloneFactory.loadCache();
 
         while (plik.hasNextDouble()) {
 
@@ -113,15 +115,25 @@ public class Mapa implements Serializable {
             budynki = new ArrayList<>();
 
             while (plik.hasNextDouble()) {
-
+                Budynek budynek;
                 double x = plik.nextDouble();
                 double y = plik.nextDouble();
                 double dl = plik.nextDouble();
                 double sz = plik.nextDouble();
                 double w = plik.nextDouble();
 
-                budynki.add(new Budynek(new Vec2d(x, y), dl, sz, w));
+                if (w < 15)
+                    budynek = BudynekCloneFactory.getBudynek("DOM");
+                else if(w < 100)
+                    budynek = BudynekCloneFactory.getBudynek("BLOK");
+                else
+                    budynek = BudynekCloneFactory.getBudynek("WYSOKIBUDYNEK");
 
+                budynek.setSrodek(new Vec2d(x,y));
+                budynek.setDlugosc(dl);
+                budynek.setSzerokosc(sz);
+                budynek.setWysokosc(w);
+                budynki.add(budynek);
             }
         }
         plik.close();

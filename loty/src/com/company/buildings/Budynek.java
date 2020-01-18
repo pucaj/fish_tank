@@ -14,7 +14,7 @@ import java.io.Serializable;
  *
  * @author Paweł Raglis
  */
-public class Budynek implements Serializable {
+public abstract class Budynek implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -60,21 +60,6 @@ public class Budynek implements Serializable {
      */
     public Vec2d getSrodek() {
         return this.srodek;
-    }
-
-    /**
-     * Creates new building using the given parameters.
-     *
-     * @param poz  Location of the center point of the building.
-     * @param dlug Dimension of the building, x axis.
-     * @param szer Dimension of the building, y axis.
-     * @param wys  Height of the building, measured in meters.
-     */
-    public Budynek(Vec2d poz, double dlug, double szer, double wys) {
-        srodek = new Vec2d(poz);
-        dlugosc = dlug;
-        szerokosc = szer;
-        wysokosc = wys;
     }
 
     /**
@@ -129,6 +114,36 @@ public class Budynek implements Serializable {
     public void draw(Graphics g) {
         g.fillRect((int) (srodek.x - dlugosc / 2), (int) (srodek.y - szerokosc / 2),
                 (int) dlugosc, (int) szerokosc);
+    }
+
+    public void setSrodek(Vec2d srodek) {
+        this.srodek = srodek;
+    }
+
+    public void setDlugosc(double dlugosc) {
+        this.dlugosc = dlugosc;
+    }
+
+    public void setSzerokosc(double szerokosc) {
+        this.szerokosc = szerokosc;
+    }
+
+    public void setWysokosc(double wysokosc) {
+        this.wysokosc = wysokosc;
+    }
+
+
+    public Object clone() {
+        Object clone = null;
+
+        try {
+            clone = super.clone();
+
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return clone;
     }
 }
 
