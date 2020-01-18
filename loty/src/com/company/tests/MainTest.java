@@ -44,7 +44,7 @@ public class MainTest {
 
         Mapa map = null;
         try {
-            map = new Mapa("map_1280x720.txt");
+            map = Mapa.getInstance("map_1280x720.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Mapa nie istnieje!");
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class MainTest {
 
         map = null;
         try {
-            map = new Mapa("brakmapy.txtcc");
+            map = Mapa.getInstance("brakmapy.txtcc");
         } catch (FileNotFoundException e) {
             System.out.println("Brak mapy");
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class MainTest {
         // With specified map
         Mapa specifiedMap = null;
         try {
-            specifiedMap = new Mapa("map_1280x720.txt");
+            specifiedMap = Mapa.getInstance("map_1280x720.txt");
         } catch (FileNotFoundException e) {
             System.out.println("Cannot load specified map");
         }
@@ -95,7 +95,7 @@ public class MainTest {
     public void tryAddStatek() {
         Radar R = null;
         try {
-            R = new Radar(new Mapa("map_1280x720.txt"));
+            R = new Radar(Mapa.getInstance("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -119,7 +119,7 @@ public class MainTest {
     public void tryZmianaKursu() {
         Radar R = null;
         try {
-            R = new Radar(new Mapa("map_1280x720.txt"));
+            R = new Radar(Mapa.getInstance("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -150,7 +150,7 @@ public class MainTest {
     public void Simulate() {
         Radar R = null;
         try {
-            R = new Radar(new Mapa("map_1280x720.txt"));
+            R = new Radar(Mapa.getInstance("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -169,7 +169,7 @@ public class MainTest {
         //simulating and deleting ships
         Radar R1 = null;
         try {
-            R1 = new Radar(new Mapa("map_1280x720.txt"));
+            R1 = new Radar(Mapa.getInstance("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -183,7 +183,7 @@ public class MainTest {
         //testing lec(speed)
         Radar R2 = null;
         try {
-            R2 = new Radar(new Mapa("map_1280x720.txt"));
+            R2 = new Radar(Mapa.getInstance("map_1280x720.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,7 @@ package com.company.gui;
 
 import com.company.ships.*;
 import com.sun.org.apache.regexp.internal.RE;
-import javafx.scene.control.SelectionMode;
+//import javafx.scene.control.SelectionMode;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

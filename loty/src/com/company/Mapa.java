@@ -19,6 +19,20 @@ import java.io.File;
  * map, their height and dimensions.
  */
 public class Mapa implements Serializable {
+    private static Mapa instance;
+
+    public static Mapa getInstance() throws FileNotFoundException {
+        if(instance == null)
+            instance = new Mapa();
+        return instance;
+    }
+
+    public static Mapa getInstance(String src) throws FileNotFoundException {
+        if(instance == null)
+            instance = new Mapa(src);
+        return instance;
+    }
+
     private static final long serialVersionUID = 1L;
     /**
      * Dimensions of the map, specifies width and height values.
@@ -62,7 +76,7 @@ public class Mapa implements Serializable {
      * @param s Name of the file containing map to load.
      * @throws FileNotFoundException
      */
-    public Mapa(String s) throws FileNotFoundException {
+    private Mapa(String s) throws FileNotFoundException {
         this.src = s;
         initMap(s);
     }
@@ -72,7 +86,7 @@ public class Mapa implements Serializable {
      *
      * @throws FileNotFoundException
      */
-    public Mapa() throws FileNotFoundException {
+    private Mapa() throws FileNotFoundException {
         this.src = "map_1280x720.txt";
         initMap(src);
     }
