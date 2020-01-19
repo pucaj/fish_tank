@@ -2,7 +2,9 @@ package com.company.factories;
 
 import com.company.ships.*;
 
-public class CivilianShipFactory implements ShipsFactory {
+import java.io.Serializable;
+
+public class CivilianShipFactory implements ShipsFactory, Serializable {
     @Override
     public Statek createBalon() {
         return new Balon();
