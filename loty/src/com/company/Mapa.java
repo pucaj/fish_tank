@@ -20,6 +20,7 @@ import java.io.File;
  * map, their height and dimensions.
  */
 public class Mapa implements Serializable {
+
     private static Mapa instance;
 
     public static Mapa getInstance() throws FileNotFoundException {

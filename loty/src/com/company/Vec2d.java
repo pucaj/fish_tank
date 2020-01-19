@@ -1,6 +1,6 @@
 package com.company;
 
-import com.sun.javafx.geom.Vec2f;
+//import com.sun.javafx.geom.Vec2f;
 import java.io.Serializable;
 
 public class Vec2d implements Serializable {
@@ -19,20 +19,20 @@ public class Vec2d implements Serializable {
     public Vec2d(Vec2d v) {
         this.set(v);
     }
-
-    public Vec2d(Vec2f v) {
-        this.set(v);
-    }
+//
+//    public Vec2d(Vec2f v) {
+//        this.set(v);
+//    }
 
     public void set(Vec2d v) {
         this.x = v.x;
         this.y = v.y;
     }
 
-    public void set(Vec2f v) {
-        this.x = (double)v.x;
-        this.y = (double)v.y;
-    }
+//    public void set(Vec2f v) {
+//        this.x = (double)v.x;
+//        this.y = (double)v.y;
+//    }
 
     public void set(double x, double y) {
         this.x = x;
