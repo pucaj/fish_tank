@@ -3,6 +3,7 @@ package com.company;
 import com.company.buildings.Budynek;
 import com.company.factories.ShipsFactory;
 import com.company.ships.*;
+import com.company.strategies.CollisionAvoidanceStrategy;
 
 import java.io.FileNotFoundException;
 
@@ -18,6 +19,12 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Radar implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    private CollisionAvoidanceStrategy avoidanceStrategy;
+
+    public void setAvoidanceStrategy(CollisionAvoidanceStrategy strategy){
+        avoidanceStrategy = strategy;
+    }
 
     public ShipsFactory shipsFactory;
 
@@ -103,25 +110,14 @@ public class Radar implements Serializable {
     /**
      * Changes object's trajectory.
      * @param id Object's identification number.
-     * @param przesuniecie Shift vector.
      * @throws IndexOutOfBoundsException if ship's id is greater or equal than size of the list containing all the ships
      * @author Daniel Skórczyński
      */
-    public void zmianaKursu(int id, Vec2d przesuniecie) throws IndexOutOfBoundsException{
+    public void zmianaKursu(int id) throws IndexOutOfBoundsException{
         if(id >= statki.size()) throw new IndexOutOfBoundsException("Index out of bounds");
-        statki.get(id).zmienKierunek(przesuniecie);
+        avoidanceStrategy.avoid(statki.get(id));
     }
-    /**
-     * Changes object's trajectory.
-     * @param id Object's identification number.
-     * @param kat Angle of shift.
-     * @throws IndexOutOfBoundsException if ship's id is greater or equal than size of the list containing all the ships
-     * @author Daniel Skórczyński
-     */
-    public void zmianaKursu(int id, double kat) throws IndexOutOfBoundsException{
-        if(id >= statki.size()) throw new IndexOutOfBoundsException("Index out of bounds");
-        statki.get(id).zmienKierunek(kat);
-    }
+
     /**
      * Changes object's trajectory.
      * @param cel Flying object.

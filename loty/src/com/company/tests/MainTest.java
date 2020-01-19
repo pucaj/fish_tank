@@ -6,6 +6,8 @@ import com.company.Vec2d;
 import com.company.factories.CivilianShipFactory;
 import com.company.ships.Statek;
 import com.company.UtilityFunctions;
+import com.company.strategies.CollisionAvoidanceByAngleChangeStrategy;
+import com.company.strategies.CollisionAvoidanceByCourseChangeStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -128,7 +130,8 @@ public class MainTest {
         double oldVelocity = R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).predkosc;
         double oldHeight = R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).wysokosc;
 
-        R.zmianaKursu(0, new Vec2d(100, 100));
+        R.setAvoidanceStrategy(new CollisionAvoidanceByCourseChangeStrategy(new Vec2d(100, 100)));
+        R.zmianaKursu(0);
 
         Vec2d newCoords = new Vec2d(R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).coord);
         double newVelocity = R.statki.get(0).trasa.get(R.statki.get(0).getN_kurs()).predkosc;
@@ -140,7 +143,8 @@ public class MainTest {
         Assertions.assertEquals(oldHeight, newHeight, "New height should be equal old height");
         Assertions.assertEquals(oldVelocity, newVelocity, "New velocity should be equal old velocity");
 
-        R.zmianaKursu(0, 4);
+        R.setAvoidanceStrategy(new CollisionAvoidanceByAngleChangeStrategy(4));
+        R.zmianaKursu(0);
         Statek s = R.statki.get(1);
         R.zmianaKursu(s, new Vec2d(500, -600));
         R.zmianaKursu(R.statki.get(2), -12.4);

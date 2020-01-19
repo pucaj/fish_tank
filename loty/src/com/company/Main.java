@@ -4,6 +4,8 @@ import com.company.factories.CivilianShipFactory;
 import com.company.gui.ControlsJPanel;
 import com.company.gui.LogsJPanel;
 import com.company.gui.MapJPanel;
+import com.company.strategies.CollisionAvoidanceByAngleChangeStrategy;
+import com.company.strategies.CollisionAvoidanceByCourseChangeStrategy;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,11 +57,13 @@ public class Main extends JFrame {
             if (!circulation)
                 activeShip = -1;
         if (doShift && angleShift == 0.0) {
-            R.zmianaKursu(realID(activeShip, R.statki), shift);
+            R.setAvoidanceStrategy(new CollisionAvoidanceByCourseChangeStrategy(shift));
+            R.zmianaKursu(realID(activeShip, R.statki));
             shift = new Vec2d(0, 0);
             doShift = false;
         } else if (doShift && angleShift != 0) {
-            R.zmianaKursu(realID(activeShip, R.statki), angleShift);
+            R.setAvoidanceStrategy(new CollisionAvoidanceByAngleChangeStrategy(angleShift));
+            R.zmianaKursu(realID(activeShip, R.statki));
             angleShift = 0;
             doShift = false;
         }
