@@ -2,6 +2,9 @@ package com.company.gui;
 
 import com.company.Vec2d;
 import com.company.ships.Statek;
+import com.company.strategies.CollisionAvoidanceByAngleChangeStrategy;
+import com.company.strategies.CollisionAvoidanceByCourseChangeStrategy;
+import com.company.strategies.CollisionAvoidanceStrategy;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -152,6 +155,7 @@ class ChangeCourseJFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object s = e.getSource();
+
         if (s.equals(OK)) {
             if (radio_l.isSelected()) {
                 doShift = true;
