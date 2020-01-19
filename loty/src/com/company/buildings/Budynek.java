@@ -138,7 +138,6 @@ public abstract class Budynek implements Serializable, Cloneable {
 
         try {
             clone = super.clone();
-
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }

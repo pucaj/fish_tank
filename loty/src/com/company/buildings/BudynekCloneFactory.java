@@ -2,7 +2,7 @@ package com.company.buildings;
 import java.util.Hashtable;
 public class BudynekCloneFactory {
 
-    private static Hashtable<String, Budynek> prototypeMap = new Hashtable<String, Budynek>();
+    private static Hashtable<String, Budynek> prototypeMap = new Hashtable<>();
 
     public static Budynek getBudynek(String typBudynku) {
         Budynek cachedBuilding = prototypeMap.get(typBudynku);
